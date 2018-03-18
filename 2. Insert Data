@@ -1,0 +1,52 @@
+-- Insert data into node tables. Inserting into a node table is same as inserting into a regular table
+INSERT INTO Person VALUES (1,'John');
+INSERT INTO Person VALUES (2,'Mary');
+INSERT INTO Person VALUES (3,'Alice');
+INSERT INTO Person VALUES (4,'Jacob');
+INSERT INTO Person VALUES (5,'Julie');
+
+INSERT INTO Restaurant VALUES (1,'Taco Dell','Bellevue');
+INSERT INTO Restaurant VALUES (2,'Ginger and Spice','Seattle');
+INSERT INTO Restaurant VALUES (3,'Noodle Land', 'Redmond');
+
+INSERT INTO City VALUES (1,'Bellevue','wa');
+INSERT INTO City VALUES (2,'Seattle','wa');
+INSERT INTO City VALUES (3,'Redmond','wa');
+
+-- Insert into edge table. While inserting into an edge table, 
+-- you need to provide the $node_id from $from_id and $to_id columns.
+INSERT INTO likes VALUES ((SELECT $node_id FROM Person WHERE id = 1), 
+       (SELECT $node_id FROM Restaurant WHERE id = 1),9);
+INSERT INTO likes VALUES ((SELECT $node_id FROM Person WHERE id = 2), 
+      (SELECT $node_id FROM Restaurant WHERE id = 2),9);
+INSERT INTO likes VALUES ((SELECT $node_id FROM Person WHERE id = 3), 
+      (SELECT $node_id FROM Restaurant WHERE id = 3),9);
+INSERT INTO likes VALUES ((SELECT $node_id FROM Person WHERE id = 4), 
+      (SELECT $node_id FROM Restaurant WHERE id = 3),9);
+INSERT INTO likes VALUES ((SELECT $node_id FROM Person WHERE id = 5), 
+      (SELECT $node_id FROM Restaurant WHERE id = 3),9);
+
+INSERT INTO livesIn VALUES ((SELECT $node_id FROM Person WHERE id = 1),
+      (SELECT $node_id FROM City WHERE id = 1));
+INSERT INTO livesIn VALUES ((SELECT $node_id FROM Person WHERE id = 2),
+      (SELECT $node_id FROM City WHERE id = 2));
+INSERT INTO livesIn VALUES ((SELECT $node_id FROM Person WHERE id = 3),
+      (SELECT $node_id FROM City WHERE id = 3));
+INSERT INTO livesIn VALUES ((SELECT $node_id FROM Person WHERE id = 4),
+      (SELECT $node_id FROM City WHERE id = 3));
+INSERT INTO livesIn VALUES ((SELECT $node_id FROM Person WHERE id = 5),
+      (SELECT $node_id FROM City WHERE id = 1));
+
+INSERT INTO locatedIn VALUES ((SELECT $node_id FROM Restaurant WHERE id = 1),
+      (SELECT $node_id FROM City WHERE id =1));
+INSERT INTO locatedIn VALUES ((SELECT $node_id FROM Restaurant WHERE id = 2),
+      (SELECT $node_id FROM City WHERE id =2));
+INSERT INTO locatedIn VALUES ((SELECT $node_id FROM Restaurant WHERE id = 3),
+      (SELECT $node_id FROM City WHERE id =3));
+
+-- Insert data into the friendof edge.
+INSERT INTO friendof VALUES ((SELECT $NODE_ID FROM person WHERE ID = 1), (SELECT $NODE_ID FROM person WHERE ID = 2));
+INSERT INTO friendof VALUES ((SELECT $NODE_ID FROM person WHERE ID = 2), (SELECT $NODE_ID FROM person WHERE ID = 3));
+INSERT INTO friendof VALUES ((SELECT $NODE_ID FROM person WHERE ID = 3), (SELECT $NODE_ID FROM person WHERE ID = 1));
+INSERT INTO friendof VALUES ((SELECT $NODE_ID FROM person WHERE ID = 4), (SELECT $NODE_ID FROM person WHERE ID = 2));
+INSERT INTO friendof VALUES ((SELECT $NODE_ID FROM person WHERE ID = 5), (SELECT $NODE_ID FROM person WHERE ID = 4));
